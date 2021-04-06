@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moscowl.Models;
+using System.Reflection;
 
 namespace Moscowl.Data
 {
@@ -8,5 +9,10 @@ namespace Moscowl.Data
         public OwlDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
 }

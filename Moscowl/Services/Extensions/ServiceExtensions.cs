@@ -20,6 +20,7 @@ namespace Moscowl.Services.Extensions
             services.AddSingleton<GlobalConfig>(new GlobalConfig {
                 Secret = secret
             });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -35,7 +36,7 @@ namespace Moscowl.Services.Extensions
 
         private static string GetRandomSecret()
         {
-            return "";
+            return "asdasd3d3d3dQASDASRQWERT3WQEER2";
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moscowl.Data;
 using Moscowl.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace Moscowl.Repositories

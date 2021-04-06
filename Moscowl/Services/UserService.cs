@@ -15,13 +15,9 @@ namespace Moscowl.Services
         private readonly IUserRepository m_repository;
         private readonly GlobalConfig m_global_config;
 
-        public UserService(GlobalConfig globalConfig)
+        public UserService(GlobalConfig globalConfig, IUserRepository repository)
         {
             m_global_config = globalConfig;
-        }
-
-        public UserService(IUserRepository repository)
-        {
             m_repository = repository;
         }
 

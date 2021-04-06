@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moscowl.Services.Extensions;
+using Moscowl.Repositories.Extensions;
 
 namespace Moscowl
 {
@@ -33,6 +34,7 @@ namespace Moscowl
             services.AddControllers();
             services.AddIdentity();
             services.AddServices();
+            services.AddRepositories();
 
             services.AddSwaggerGen(c =>
             {
