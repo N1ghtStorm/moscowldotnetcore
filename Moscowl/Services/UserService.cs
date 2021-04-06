@@ -14,10 +14,18 @@ namespace Moscowl.Services
             _repository = repository;
         }
 
-        public async Task CreateUser(UserForRegisterDTO user_dto)
+        public async Task CreateUser(UserDto user_dto)
         {
             var user = User.MapDto(user_dto, CreatePasswordHash);
             await _repository.CreateUser(user);
+        }
+
+        public async Task LoginUser(UserDto user_dto)
+        {
+            //var user = User.MapDto(user_dto, CreatePasswordHash);
+
+
+            //await _repository.CreateUser(user);
         }
 
         private bool VarifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)

@@ -1,6 +1,6 @@
 ﻿namespace Moscowl.DTOs
 {
-    public class UserForRegisterDTO
+    public class UserDto
     {
         public string Name { get; set; }
         public string Password { get; set; }

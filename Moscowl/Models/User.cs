@@ -10,7 +10,7 @@ namespace Moscowl.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
-        public static User MapDto(UserForRegisterDTO dto, Func<string, (byte[], byte[])> hasher)
+        public static User MapDto(UserDto dto, Func<string, (byte[], byte[])> hasher)
         {
             var (hash, salt) = hasher(dto.Password);
             return new User()

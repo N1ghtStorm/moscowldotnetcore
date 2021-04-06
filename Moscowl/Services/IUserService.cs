@@ -5,6 +5,6 @@ namespace Moscowl.Services
 {
     public interface IUserService
     {
-        Task CreateUser(UserForRegisterDTO user_dto);
+        Task CreateUser(UserDto user_dto);
     }
 }
