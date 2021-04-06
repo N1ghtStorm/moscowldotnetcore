@@ -12,28 +12,28 @@ namespace Moscowl.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _repository;
-        private readonly GlobalConfig _globalconfig;
+        private readonly IUserRepository m_repository;
+        private readonly GlobalConfig m_global_config;
 
         public UserService(GlobalConfig globalConfig)
         {
-            _globalconfig = globalConfig;
+            m_global_config = globalConfig;
         }
 
         public UserService(IUserRepository repository)
         {
-            _repository = repository;
+            m_repository = repository;
         }
 
         public async Task CreateUser(UserDto user_dto)
         {
             var user = User.MapDto(user_dto, CreatePasswordHash);
-            await _repository.CreateUser(user);
+            await m_repository.CreateUser(user);
         }
 
         public async Task<TokenDto> LoginUser(UserDto user_dto)
         {
-            var created_user = await _repository.GetUser(user_dto.Name);
+            var created_user = await m_repository.GetUser(user_dto.Name);
             var is_valid = VarifyPasswordHash(user_dto.Password, created_user.PasswordHash, created_user.PasswordSalt);
 
             if (!is_valid)
@@ -41,8 +41,8 @@ namespace Moscowl.Services
                 throw new NotFoundException($"user {user_dto.Name} not found");
             }
 
-            var refresh_token = CreateToken(_globalconfig.Secret, 1_728_000);
-            var access_token = CreateToken(_globalconfig.Secret, 300);
+            var refresh_token = CreateToken(m_global_config.Secret, 1_728_000);
+            var access_token = CreateToken(m_global_config.Secret, 300);
             return new TokenDto() { 
                 Refresh = refresh_token,
                 Access = access_token
