@@ -24,7 +24,6 @@ namespace Moscowl.Controllers
             };
         }
 
-
         public async Task<IActionResult> InvokeRequest(Func<Task<IActionResult>> func)
         {
             try
