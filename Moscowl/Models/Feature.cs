@@ -6,7 +6,7 @@ namespace Moscowl.Models
     {
         public int Id { get; set; }
 
-        public int FeatureName { get; set; }
+        public string FeatureName { get; set; }
         public List<PlayerSeason> PlayerSeasons { get; set; }
     }
 }
