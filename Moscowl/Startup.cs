@@ -32,9 +32,12 @@ namespace Moscowl
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddIdentity();
+
             services.AddServices();
-            services.AddRepositories();
+
+            services.AddRepositories(Configuration);
 
             services.AddSwaggerGen(c =>
             {

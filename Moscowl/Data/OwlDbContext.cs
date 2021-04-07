@@ -9,6 +9,10 @@ namespace Moscowl.Data
         public OwlDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<PlayerSeason> PlayerSeasons { get; set; }
+        public DbSet<Season> Seasons { get; set; }
+        public DbSet<Feature> Feature { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
