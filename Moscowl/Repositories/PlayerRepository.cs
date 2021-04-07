@@ -1,4 +1,7 @@
-﻿using Moscowl.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Moscowl.Data;
+using Moscowl.Exceptions;
+using Moscowl.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,29 +10,57 @@ namespace Moscowl.Repositories
 {
     public class PlayerRepository : IPlayerRepository
     {
-        public Task<Player> CreatePlayer(Player player)
+        private readonly OwlDbContext m_db_context;
+
+        public PlayerRepository(OwlDbContext db_context)
         {
-            throw new NotImplementedException();
+            m_db_context = db_context;
         }
 
-        public Task<Player> DeletePlayer(int id)
+        public async Task<Player> CreatePlayer(Player player)
         {
-            throw new NotImplementedException();
+            await m_db_context.AddAsync(player);
+            await m_db_context.SaveChangesAsync();
+            return player;
         }
 
-        public Task<Player> GetPlayer(int id)
+        public async Task<Player> DeletePlayer(int id)
         {
-            throw new NotImplementedException();
+            var player = await m_db_context.Players.FindAsync(id);
+
+            if(player == null)
+            {
+                throw new NotFoundException();
+            }
+
+            m_db_context.Remove(player);
+            await m_db_context.SaveChangesAsync();
+            return player;
         }
 
-        public Task<List<Player>> GetPlayers()
+        public async Task<Player> GetPlayer(int id)
         {
-            throw new NotImplementedException();
+            return await m_db_context.Players.FindAsync(id);
         }
 
-        public Task<Player> UpdatePlayer(int id, Player player)
+        public async Task<List<Player>> GetPlayers()
         {
-            throw new NotImplementedException();
+            return await m_db_context.Players.ToListAsync();
+        }
+
+        public async Task<Player> UpdatePlayer(int id, Player player)
+        {
+            var found_player = await m_db_context.Players.FindAsync(id);
+
+            if (found_player == null)
+            {
+                throw new NotFoundException();
+            }
+
+            player.Id = id;
+            m_db_context.Update(player);
+            await m_db_context.SaveChangesAsync();
+            return player;
         }
     }
 }

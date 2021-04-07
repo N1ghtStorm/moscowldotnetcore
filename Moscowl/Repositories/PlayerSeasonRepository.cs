@@ -1,36 +1,65 @@
-﻿using Moscowl.Models;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Moscowl.Data;
+using Moscowl.Exceptions;
+using Moscowl.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Moscowl.Repositories
 {
     public class PlayerSeasonRepository : IPlayerSeasonRepository
     {
-        public Task<PlayerSeason> CreatePlayerSeason(PlayerSeason player_season)
+        private readonly OwlDbContext m_db_context;
+
+        public PlayerSeasonRepository(OwlDbContext db_context)
         {
-            throw new NotImplementedException();
+            m_db_context = db_context;
         }
 
-        public Task<PlayerSeason> DeletePlayerSeason(int id)
+        public async Task<PlayerSeason> CreatePlayerSeason(PlayerSeason player_season)
         {
-            throw new NotImplementedException();
+            await m_db_context.AddAsync(player_season);
+            await m_db_context.SaveChangesAsync();
+            return player_season;
         }
 
-        public Task<PlayerSeason> GetPlayerSeason(int id)
+        public async Task<PlayerSeason> DeletePlayerSeason(int id)
         {
-            throw new NotImplementedException();
+            var player_season = await m_db_context.PlayerSeasons.FindAsync(id);
+
+            if (player_season == null)
+            {
+                throw new NotFoundException();
+            }
+
+            m_db_context.Remove(player_season);
+            await m_db_context.SaveChangesAsync();
+            return player_season;
         }
 
-        public Task<List<PlayerSeason>> GetPlayersSeason()
+        public async Task<PlayerSeason> GetPlayerSeason(int id)
         {
-            throw new NotImplementedException();
+            return await m_db_context.PlayerSeasons.FindAsync(id);
         }
 
-        public Task<PlayerSeason> UpdatePlayerSeason(int id, PlayerSeason player_season)
+        public async Task<List<PlayerSeason>> GetPlayersSeason()
         {
-            throw new NotImplementedException();
+            return await m_db_context.PlayerSeasons.ToListAsync();
+        }
+
+        public async Task<PlayerSeason> UpdatePlayerSeason(int id, PlayerSeason player_season)
+        {
+            var found_player_season = await m_db_context.PlayerSeasons.FindAsync(id);
+
+            if (found_player_season == null)
+            {
+                throw new NotFoundException();
+            }
+
+            player_season.Id = id;
+            m_db_context.Update(player_season);
+            await m_db_context.SaveChangesAsync();
+            return player_season;
         }
     }
 }

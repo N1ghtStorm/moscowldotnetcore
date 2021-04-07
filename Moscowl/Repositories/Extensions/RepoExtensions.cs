@@ -10,6 +10,10 @@ namespace Moscowl.Repositories.Extensions
         public static void AddRepositories(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IPlayerSeasonRepository, PlayerSeasonRepository>();
+            services.AddScoped<ISeasonRepository, SeasonRepository>();
+
             services.AddDbContext<OwlDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString()), ServiceLifetime.Transient);
         }
 

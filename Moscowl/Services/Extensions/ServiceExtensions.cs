@@ -13,6 +13,10 @@ namespace Moscowl.Services.Extensions
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IPlayerSeasonService, PlayerSeasonService>();
+            services.AddScoped<ISeasonService, SeasonService>();
         }
 
         public static void AddIdentity(this IServiceCollection services)
