@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Moscowl.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/.admw/.[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiController]
     public class UserController : ExtendedApiController<IUserService>
     {

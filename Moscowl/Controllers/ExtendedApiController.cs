@@ -22,7 +22,7 @@ namespace Moscowl.Controllers
             };
         }
 
-        public async Task<IActionResult> InvokeRequest(Func<Task<IActionResult>> func)
+        protected async Task<IActionResult> InvokeRequest(Func<Task<IActionResult>> func)
         {
             try
             {
@@ -33,6 +33,5 @@ namespace Moscowl.Controllers
                 return Error(new Error(500, e.Message));
             }
         }
-
     }
 }

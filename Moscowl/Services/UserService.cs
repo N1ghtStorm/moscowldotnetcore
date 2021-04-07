@@ -4,6 +4,7 @@ using Moscowl.DTOs;
 using Moscowl.Exceptions;
 using Moscowl.Models;
 using Moscowl.Repositories;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,8 +38,8 @@ namespace Moscowl.Services
                 throw new NotFoundException($"user {user_dto.Name} not found");
             }
 
-            var refresh_token = CreateToken(m_global_config.Secret, 1_728_000);
-            var access_token = CreateToken(m_global_config.Secret, 300);
+            var refresh_token = CreateToken(m_global_config.Secret, 40000);
+            var access_token = CreateToken(m_global_config.Secret, 5);
             return new TokenDto() { 
                 Refresh = refresh_token,
                 Access = access_token
@@ -72,7 +73,8 @@ namespace Moscowl.Services
 
             var tokenDescr = new SecurityTokenDescriptor
             {
-                SigningCredentials = creds
+                SigningCredentials = creds,
+                Expires = DateTime.Now.AddMinutes(life_time)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
