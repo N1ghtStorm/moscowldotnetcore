@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Moscowl.Models
+﻿namespace Moscowl.Models
 {
     public class PlayerSeason
     {
@@ -12,6 +10,6 @@ namespace Moscowl.Models
 
         public Player Player { get; set; }
         public Season Season { get; set; }
-        public List<Feature> Features { get; set; }
+        public Feature Feature { get; set; }
     }
 }
