@@ -24,6 +24,16 @@ namespace Moscowl.Services
 
         public async Task CreateUser(UserDto user_dto)
         {
+            if (string.IsNullOrWhiteSpace(user_dto.Password))
+            {
+                throw new BadRequestException();
+            }
+
+            if (user_dto.Password.Length < 10)
+            {
+                throw new BadRequestException();
+            }
+
             var user = User.MapDto(user_dto, CreatePasswordHash);
             await m_repository.CreateUser(user);
         }
@@ -41,6 +51,19 @@ namespace Moscowl.Services
             var refresh_token = CreateToken(m_global_config.Secret, 40000);
             var access_token = CreateToken(m_global_config.Secret, 5);
             return new TokenDto() { 
+                Refresh = refresh_token,
+                Access = access_token
+            };
+        }
+
+        public async Task<TokenDto> Refresh()
+        {
+            await Task.CompletedTask;
+            var refresh_token = CreateToken(m_global_config.Secret, 40000);
+            var access_token = CreateToken(m_global_config.Secret, 5);
+
+            return new TokenDto()
+            {
                 Refresh = refresh_token,
                 Access = access_token
             };

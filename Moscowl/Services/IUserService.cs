@@ -7,5 +7,6 @@ namespace Moscowl.Services
     {
         Task CreateUser(UserDto user_dto);
         Task<TokenDto> LoginUser(UserDto user_dto);
+        Task<TokenDto> Refresh();
     }
 }
