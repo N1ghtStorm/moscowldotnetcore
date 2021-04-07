@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moscowl.Controllers.Errors;
+using Moscowl.Exceptions;
 using System;
 using System.Threading.Tasks;
 
@@ -27,6 +28,14 @@ namespace Moscowl.Controllers
             try
             {
                 return await func();
+            }
+            catch (NotFoundException e)
+            {
+                return Error(new Error(404, e.Message));
+            }
+            catch (BadRequestException e)
+            {
+                return Error(new Error(400, e.Message));
             }
             catch (Exception e)
             {

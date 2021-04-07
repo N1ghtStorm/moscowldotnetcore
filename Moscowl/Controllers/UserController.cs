@@ -19,7 +19,7 @@ namespace Moscowl.Controllers
         {
             return await InvokeRequest(async () => {
                 await Service.CreateUser(user_dto);
-                return Ok();
+                return Created("", null);
             });
         }
 
@@ -28,8 +28,8 @@ namespace Moscowl.Controllers
         public async Task<IActionResult> Login([FromBody]UserDto user_dto)
         {
             return await InvokeRequest(async () => {
-                await Service.CreateUser(user_dto);
-                return Ok();
+                var tokens = await Service.LoginUser(user_dto);
+                return Ok(tokens);
             });
         }
 
@@ -37,8 +37,8 @@ namespace Moscowl.Controllers
         public async Task<IActionResult> Refresh()
         {
             return await InvokeRequest(async () => {
-                //await Service.CreateUser(user_dto);
-                return Ok();
+                var tokens = await Service.Refresh();
+                return Ok(tokens);
             });
         }
     }

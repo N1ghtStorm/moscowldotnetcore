@@ -18,7 +18,7 @@ namespace Moscowl.Controllers
         {
             return await InvokeRequest(async () => {
                 var result = await Service.CreateSeason(season);
-                return Ok(result);
+                return Created("", result);
             });
         }
 
