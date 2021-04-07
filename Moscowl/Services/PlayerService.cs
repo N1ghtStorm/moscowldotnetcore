@@ -1,5 +1,5 @@
 ﻿using Moscowl.Models;
-using System;
+using Moscowl.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,29 +7,36 @@ namespace Moscowl.Services
 {
     public class PlayerService : IPlayerService
     {
-        public Task<Player> CreatePlayer(Player player)
+        private readonly IPlayerRepository m_repo;
+
+        public PlayerService(IPlayerRepository repo)
         {
-            throw new NotImplementedException();
+            m_repo = repo;
         }
 
-        public Task<Player> DeletePlayer(int id)
+        public async Task<Player> CreatePlayer(Player player)
         {
-            throw new NotImplementedException();
+            return await m_repo.CreatePlayer(player);
         }
 
-        public Task<Player> GetPlayer(int id)
+        public async Task<Player> DeletePlayer(int id)
         {
-            throw new NotImplementedException();
+            return await m_repo.DeletePlayer(id);
         }
 
-        public Task<List<Player>> GetPlayers()
+        public async Task<Player> GetPlayer(int id)
         {
-            throw new NotImplementedException();
+            return await m_repo.GetPlayer(id);
         }
 
-        public Task<Player> UpdatePlayer(int id, Player player)
+        public async Task<List<Player>> GetPlayers()
         {
-            throw new NotImplementedException();
+            return await m_repo.GetPlayers();
+        }
+
+        public async Task<Player> UpdatePlayer(int id, Player player)
+        {
+            return await m_repo.CreatePlayer(player);
         }
     }
 }

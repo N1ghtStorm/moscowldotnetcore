@@ -1,5 +1,5 @@
 ﻿using Moscowl.Models;
-using System;
+using Moscowl.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,29 +7,36 @@ namespace Moscowl.Services
 {
     public class SeasonService : ISeasonService
     {
-        public Task<Season> CreateSeason(Season season)
+        private readonly ISeasonRepository m_repo;
+
+        public SeasonService(ISeasonRepository repo)
         {
-            throw new NotImplementedException();
+            m_repo = repo;
         }
 
-        public Task<Season> DeleteSeason(int id)
+        public async Task<Season> CreateSeason(Season season)
         {
-            throw new NotImplementedException();
+            return await m_repo.CreateSeason(season);
         }
 
-        public Task<Season> GetSeason(int id)
+        public async Task<Season> DeleteSeason(int id)
         {
-            throw new NotImplementedException();
+            return await m_repo.DeleteSeason(id);
         }
 
-        public Task<List<Season>> GetSeasons()
+        public async Task<Season> GetSeason(int id)
         {
-            throw new NotImplementedException();
+            return await m_repo.GetSeason(id);
         }
 
-        public Task<Season> UpdateSeason(int id, Season season)
+        public async Task<List<Season>> GetSeasons()
         {
-            throw new NotImplementedException();
+            return await m_repo.GetSeasons();
+        }
+
+        public async Task<Season> UpdateSeason(int id, Season season)
+        {
+            return await m_repo.UpdateSeason(id, season);
         }
     }
 }
